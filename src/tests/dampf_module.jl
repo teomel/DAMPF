@@ -117,15 +117,6 @@ where ``N`` goes from 1 to `nsites`, `Q` is the total number of oscillators per 
 and ``k_{n,q}`` is the q-th element of the n-th row in `coups`.
 `coups` has to be a matrix of this kind [[``1 \; k_{11} ... k_{1Q}``]; ... [``i \; k_{n1} ... k_{nq} ... k_{nQ}``]; ... [``N \; k_{N1} ... k_{NQ}]``],
 where ``i`` determines the electronic site coupled to the `Q` oscillators with coupling strength ``k_{nq}``.
-
-Precisely
-```math
-\mathcal{O}^{m,n}(t + dt) = e^{-i [H_{ev},\cdot] dt} \mathcal{O}^{m,n}(t),
-```
-where
-```math
-
-```
 """
 function getIntGates(dt::Float64, coups::Matrix{Float64}, Q::Int64, sys::Vector{Index{Int64}}, nsites::Int64)
     
