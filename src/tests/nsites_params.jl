@@ -2,7 +2,7 @@
 ### FMO complex parameters
 # ================================================
 
-nsites = 4 #number of sites
+nsites = 2 #number of sites
 noscpersite = 6 #number of oscillators per site
 nosc = nsites * noscpersite # define the total number of oscillator
 localDim = 3 #local dimension of the oscillators
