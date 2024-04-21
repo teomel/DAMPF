@@ -78,7 +78,6 @@ maxBondDim = 4
 println("χ=$maxBondDim: ")
 pops = evolveRho(rho, timestep, time, maxBondDim, locOscGates, intGates, elEvoCoefficients, bath, nsites, localDim)
 save("plots/pops$(nsites).jld2", "pops", pops) # save pops with name "pops". To load use: pops = load(filename, "pops")
-arrTraceReducedRho = [sum([pops[m][m][j] for m in 1:nsites]) for j in 1:length(pops[1][1])]
 
 # ### EvolveRho to be compared
 # maxBondDimCompare = 6
@@ -86,7 +85,6 @@ arrTraceReducedRho = [sum([pops[m][m][j] for m in 1:nsites]) for j in 1:length(p
 # println("χ=$maxBondDimCompare: ")
 # popscompare = evolveRho(rho, timestep, time, maxBondDimCompare, locOscGates, intGates, elEvoCoefficients, bath, nsites, localDim)
 # save("plots/popscompare$(nsites).jld2", "pops", pops)
-# arrTraceReducedRhoCompare = [sum([popscompare[m][m][j] for m in 1:nsites]) for j in 1:length(popscompare[1][1])]
 
 println("")
 
@@ -95,15 +93,15 @@ println("")
 
 #### Plot population
 x=range(0,time,length=length(pops[1][1]))
-real_plot = [real(pops[m][m])./real(arrTraceReducedRho) for m in 1:nsites]
+real_plot = [real(pops[m][m]) for m in 1:nsites]
 labels = hcat(["\\rho_{$(m)$(m)}" for m in 1:nsites]...)
 display(plot(x, real_plot, title="Populations", label=labels, xlabel="Time [fs]", ylabel="Populations"))
 savefig("plots/populations$(nsites).pdf")
 
 # #### Plot population overlapping different bond dimensions
 # x=range(0,time,length=length(pops[1][1]))
-# real_plot = [real(pops[m][m])./real(arrTraceReducedRho) for m in 1:nsites]
-# real_plotcompare = [real(popscompare[m][m])./real(arrTraceReducedRhoCompare) for m in 1:nsites]
+# real_plot = [real(pops[m][m]) for m in 1:nsites]
+# real_plotcompare = [real(popscompare[m][m]) for m in 1:nsites]
 # labels = hcat(["\\rho_{$(m)$(m)} (\\chi = $(maxBondDim))" for m in 1:nsites]...)
 # labelscompare = hcat(["\\rho_{$(m)$(m)} (\\chi = $(maxBondDimCompare))" for m in 1:nsites]...)
 # plot(x, real_plot, title="Populations", label=labels, linewidth=3, xlabel="Time [fs]", ylabel="Populations")
@@ -112,8 +110,8 @@ savefig("plots/populations$(nsites).pdf")
 
 # Plot coherence
 x=range(0,time,length=length(pops[1][1]))
-real_plot = [real(pops[m][l])./real(arrTraceReducedRho) for m in 1:nsites for l in (m+1):nsites]
-imag_plot = [imag(pops[m][l])./real(arrTraceReducedRho) for m in 1:nsites for l in (m+1):nsites]
+real_plot = [real(pops[m][l]) for m in 1:nsites for l in (m+1):nsites]
+imag_plot = [imag(pops[m][l]) for m in 1:nsites for l in (m+1):nsites]
 # real_labels = hcat(["Re \\rho_{$(m)$(l)}" for m in 1:nsites for l in (m+1):nsites]...)
 # imag_labels = hcat(["Im \\rho_{$(m)$(l)}" for m in 1:nsites for l in (m+1):nsites]...)
 plot(x, real_plot, title="Coherences", legend=false, xlabel="Time [fs]", ylabel="Coherences")
